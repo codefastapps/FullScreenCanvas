@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>Demo</title>
+		<script>
+			function funEvtStartup(incEvent){
+				elmDivScreen = document.getElementById("divScreen");
+				elmCanvasScreen = document.createElement("canvas")
+				elmCanvasScreen.setAttribute("id","canvasScreen");
+				elmCanvasScreen.width = funGetWindowWidth();
+				elmCanvasScreen.height = funGetWindowHeight();
+				elmDivScreen.appendChild(elmCanvasScreen);
+				ctxCanvasScreen = elmCanvasScreen.getContext("2d");
+				for (intHeightCounter = 0; intHeightCounter < elmCanvasScreen.height; intHeightCounter++) {
+					for (intWidthCounter = 0; intWidthCounter < elmCanvasScreen.width; intWidthCounter++) {
+						ctxCanvasScreen.fillStyle = funRandomRGBA();
+						ctxCanvasScreen.fillRect(intWidthCounter,intHeightCounter,1,1);
+					}
+				}
+			}
+			function funRandomRGBA(){
+				return "rgba(" + funRandomColorNumber() + "," + funRandomColorNumber() + "," + funRandomColorNumber() + "," + funRandomOpacity() + ")";
+			}
+			function funRandomOpacity(){
+				return (Math.round( Math.random() * 10 ) / 10);
+			}
+			function funRandomColorNumber(){
+				return Math.floor(Math.random() * 256);
+			}
+			function funGetWindowWidth(){
+				var w = window,
+    				d = document,
+    				e = d.documentElement,
+    				g = d.getElementsByTagName('body')[0];
+    				return w.innerWidth || e.clientWidth || g.clientWidth;
+			}
+			function funGetWindowHeight(){
+				var w = window,
+    				d = document,
+    				e = d.documentElement,
+    				g = d.getElementsByTagName('body')[0];
+				return w.innerHeight|| e.clientHeight|| g.clientHeight;
+			}
+			function funGetPixelRGBA(incCanvasContext, incX, incY){
+				strReturn =  "\nPixel Color";
+				strReturn += "\n============";
+				strReturn += "\nRed: " + incCanvasContext.getImageData(incX, incY, 1, 1).data[0];
+				strReturn += "\nGreen: " + incCanvasContext.getImageData(incX, incY, 1, 1).data[1];
+				strReturn += "\nBlue: " + incCanvasContext.getImageData(incX, incY, 1, 1).data[2];
+				strReturn += "\nOpacity: " + incCanvasContext.getImageData(incX, incY, 1, 1).data[3];
+				return strReturn;
+			}
+
+			window.onload = funEvtStartup;
+			
+		</script>
+		<style>
+			*{
+				margin: 0px;
+				padding: opx;
+				border: 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="divScreen">
+		</div>
+	</body>
+</html>
